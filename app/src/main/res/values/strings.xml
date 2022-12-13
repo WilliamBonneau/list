@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">list</string>
+    <string name="item_default">Nom de la recette non trouvé</string>
+    <string name="item_default_price">Note obtenue de la reccette non trouvé</string>
+    <string name="item_default_nbNote">Nombre de notes de la recette non trouvé </string>
+    <string name="item_default_pseudo">Pseudo non trouvé </string>
+    <string name="item_default_note_given">Note donnée non trouvé</string>
+    <string name="item_default_comment">Commentaire non trouvé</string>
+    <string name="item_default_date">Date non trouvée</string>
+</resources>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:background="@color/blueCiel200">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:background="#F1FEFF"
+        android:id="@+id/table_list">
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ems="10"
+            android:hint="entrer votre recherche"
+            android:minHeight="48dp" />
+        <ImageView
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_toRightOf="@+id/input"
+            android:id="@+id/img_search"
+            android:layout_marginLeft="7sp"
+            android:src="@drawable/btn_search"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/list_items"
+        android:layout_width="wrap_content"
+        android:layout_height="620dp"
+        android:layout_below="@+id/table_list"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="20dp"
+        android:divider="@color/blueCiel200"
+        android:dividerHeight="8.0sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="118dp"
+        android:layout_below="@+id/list_items"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Précedent"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/button_actuel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Actuelle"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Suivant"
+            android:visibility="gone"/>
+    </LinearLayout>
+</RelativeLayout>

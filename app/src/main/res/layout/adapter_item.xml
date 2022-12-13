@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".MainActivity"
+    android:layout_marginTop="150dp">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/widthImgText"
+        android:layout_height="@dimen/heightImgText"
+        android:elevation="30dp">
+
+        <ImageView
+            android:id="@+id/item_img"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            tools:srcCompat="@tools:sample/avatars" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="275dp"
+        android:layout_height="@dimen/heightImgText"
+        android:elevation="30dp"
+        app:cardBackgroundColor="@color/beige">
+
+        <RelativeLayout
+            android:layout_width="214dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:autoSizeTextType="uniform">
+
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_default"
+                android:textColor="@color/purple_500"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/item_note_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_title"
+                android:text="@string/item_default_price"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/item_nb_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_note_value"
+                android:text="@string/item_default_nbNote"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/item_pseudo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_nb_note"
+                android:text="@string/item_default_pseudo"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/item_note_given"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_pseudo"
+                android:text="@string/item_default_note_given"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/item_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_note_given"
+                android:text="@string/item_default_comment"
+                android:textSize="11dp" />
+
+            <TextView
+                android:id="@+id/item_date_post"
+                android:layout_width="84dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="128dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/item_default_date"
+                android:textSize="11dp" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
