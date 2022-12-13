@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,24 +65,58 @@ public class listItemsAdapter extends BaseAdapter {
         TextView itemNbNoteView = view.findViewById(R.id.item_nb_note);
         TextView itemNoteValueListView = view.findViewById(R.id.item_note_value);
         ImageView itemImgView = view.findViewById(R.id.item_img);
+
+        TextView itemPseudo = view.findViewById(R.id.item_pseudo);
+        TextView itemNoteGiven = view.findViewById(R.id.item_note_given);
+        TextView itemComment = view.findViewById(R.id.item_comment);
+        TextView itemDatePost = view.findViewById(R.id.item_date_post);
+
         String pseudo;
         String noteGiven;
         String comment;
+        String datePost;
 
-        Log.e("recu ", itemAllCommentInfos);
+
         String regexDefaut = ".*: ";
         String regexComment = "commentaire donné : .*";
-        String regexNoteGiven = "";
+        String regexNoteGiven = "Note donné : .*";
         String regexPseudo = "";
         //extract all info and set it
 
-        Pattern pattern = Pattern.compile("commentaire donné : .*");
-        Matcher matcher = pattern.matcher(itemAllCommentInfos);
-        if (matcher.find())
+        Pattern ptrnCom = Pattern.compile("commentaire donné : .*");
+        Pattern ptrnNoteGiven = Pattern.compile("Note donné : .*");
+        Pattern ptrnPseudo = Pattern.compile(".*");
+
+        Log.e("recu 1", itemAllCommentInfos);
+        Matcher mtchComment = ptrnCom.matcher(itemAllCommentInfos);
+        if (mtchComment.find())
         {
-            Log.e("test1", matcher.group().replaceAll(regexDefaut,""));
-            itemAllCommentInfos.replaceAll(regexComment,"");
+            comment = mtchComment.group().replaceAll(regexDefaut,"").trim();
+            itemAllCommentInfos = itemAllCommentInfos.replaceAll(regexComment,"").trim();
+            itemComment.setText(comment);
+            Log.e("","comment : "+ comment);
         }
+
+        Log.e("recu 2", itemAllCommentInfos);
+        Matcher mtchNoteGiven = ptrnNoteGiven.matcher(itemAllCommentInfos);
+        if (mtchNoteGiven.find())
+        {
+            noteGiven = mtchNoteGiven.group().replaceAll(regexDefaut,"").trim();
+            itemAllCommentInfos = itemAllCommentInfos.replaceAll(regexNoteGiven,"").trim();
+            itemNoteGiven.setText(noteGiven);
+            Log.e("","note" + itemNoteGiven);
+        }
+
+        Log.e("recu 3", itemAllCommentInfos);
+        Matcher mtchPseudo = ptrnPseudo.matcher(itemAllCommentInfos);
+        if (mtchPseudo.find())
+        {
+            Log.e("", mtchPseudo.group());
+            pseudo = mtchPseudo.group().replaceAll(regexDefaut,"");
+            Log.e("TAG", pseudo);
+            itemPseudo.setText(pseudo);
+        }
+
 
 
         itemTitleView.setText(itemTitle);

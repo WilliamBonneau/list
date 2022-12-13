@@ -55,7 +55,9 @@
                 android:id="@+id/item_nb_note"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/item_note_value"
+                android:layout_below="@+id/item_title"
+                android:layout_marginStart="125dp"
+                android:layout_marginTop="0dp"
                 android:text="@string/item_default_nbNote"
                 android:textSize="11dp" />
 
@@ -63,7 +65,8 @@
                 android:id="@+id/item_pseudo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/item_nb_note"
+                android:layout_below="@+id/item_note_value"
+                android:layout_marginTop="8dp"
                 android:text="@string/item_default_pseudo"
                 android:textSize="11dp" />
 
@@ -77,11 +80,15 @@
 
             <TextView
                 android:id="@+id/item_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
                 android:layout_below="@id/item_note_given"
                 android:text="@string/item_default_comment"
-                android:textSize="11dp" />
+                android:autoSizeMinTextSize="8dp"
+                android:autoSizeMaxTextSize="15dp"
+                android:autoSizeStepGranularity="0.25dp"
+                android:autoSizeTextType="uniform"
+                />
 
             <TextView
                 android:id="@+id/item_date_post"
