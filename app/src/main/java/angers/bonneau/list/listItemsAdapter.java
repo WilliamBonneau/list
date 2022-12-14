@@ -80,40 +80,44 @@ public class listItemsAdapter extends BaseAdapter {
         String regexDefaut = ".*: ";
         String regexComment = "commentaire donné : .*";
         String regexNoteGiven = "Note donné : .*";
-        String regexPseudo = "";
+        String regexDatePost = "date donné : .*";
+
         //extract all info and set it
 
         Pattern ptrnCom = Pattern.compile("commentaire donné : .*");
         Pattern ptrnNoteGiven = Pattern.compile("Note donné : .*");
+        Pattern ptrnDatePost = Pattern.compile("date donné : .*");
         Pattern ptrnPseudo = Pattern.compile(".*");
 
-        Log.e("recu 1", itemAllCommentInfos);
+
+        Matcher mtchDatePost = ptrnDatePost.matcher(itemAllCommentInfos);
+        if (mtchDatePost.find())
+        {
+            datePost = mtchDatePost.group().replaceAll(regexDefaut,"").trim();
+            itemAllCommentInfos = itemAllCommentInfos.replaceAll(regexDatePost,"").trim();
+            itemDatePost.setText(datePost);
+        }
+
         Matcher mtchComment = ptrnCom.matcher(itemAllCommentInfos);
         if (mtchComment.find())
         {
             comment = mtchComment.group().replaceAll(regexDefaut,"").trim();
             itemAllCommentInfos = itemAllCommentInfos.replaceAll(regexComment,"").trim();
             itemComment.setText(comment);
-            Log.e("","comment : "+ comment);
         }
 
-        Log.e("recu 2", itemAllCommentInfos);
         Matcher mtchNoteGiven = ptrnNoteGiven.matcher(itemAllCommentInfos);
         if (mtchNoteGiven.find())
         {
             noteGiven = mtchNoteGiven.group().replaceAll(regexDefaut,"").trim();
             itemAllCommentInfos = itemAllCommentInfos.replaceAll(regexNoteGiven,"").trim();
             itemNoteGiven.setText(noteGiven);
-            Log.e("","note" + itemNoteGiven);
         }
 
-        Log.e("recu 3", itemAllCommentInfos);
         Matcher mtchPseudo = ptrnPseudo.matcher(itemAllCommentInfos);
         if (mtchPseudo.find())
         {
-            Log.e("", mtchPseudo.group());
             pseudo = mtchPseudo.group().replaceAll(regexDefaut,"");
-            Log.e("TAG", pseudo);
             itemPseudo.setText(pseudo);
         }
 
@@ -138,7 +142,6 @@ public class listItemsAdapter extends BaseAdapter {
                 mContext = (Activity) context;
 
                 Intent intent = new Intent(view.getContext(), openRecette.class);
-                Log.e("truc",itemHrefLink);
                 intent.putExtra("url",itemHrefLink);
                 context.startActivity(intent);
                 mContext .overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">list</string>
-    <string name="item_default">Nom manquant</string>
-    <string name="item_default_price">Note obtenue manquante</string>
+    <string name="item_default_recette">Recette manquant</string>
+    <string name="item_default_note_value">Note obtenue manquante</string>
     <string name="item_default_nbNote">Nombre de avis manquant</string>
     <string name="item_default_pseudo">Pseudo manquant</string>
     <string name="item_default_note_given">Note donnée manquante</string>

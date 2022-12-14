@@ -39,7 +39,7 @@
                 android:id="@+id/item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/item_default"
+                android:text="@string/item_default_recette"
                 android:textColor="@color/purple_500"
                 android:textSize="13dp" />
 
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/item_title"
-                android:text="@string/item_default_price"
+                android:text="@string/item_default_note_value"
                 android:textSize="11dp" />
 
             <TextView
@@ -92,14 +92,15 @@
 
             <TextView
                 android:id="@+id/item_date_post"
-                android:layout_width="84dp"
+                android:layout_width="94dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="128dp"
+                android:layout_marginStart="118dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
+               android:textAlignment="textEnd"
                 android:text="@string/item_default_date"
                 android:textSize="11dp" />
 

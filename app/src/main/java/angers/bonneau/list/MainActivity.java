@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
     public class description_webscrappe extends AsyncTask<Void, Void, String> {
 
         public description_webscrappe(String text) {
-            Log.e("",text);
         }
 
         @Override
@@ -161,14 +160,27 @@ public class MainActivity extends AppCompatActivity {
                 }
                 hrefList.removeAll(Arrays.asList("", null));
 
-                //faire matcher pour href
+                if (titleList.size()==0){
+                    String defautTitle = getResources().getString(R.string.item_default_recette);
+                    titleList.add(defautTitle);
+                }
+                if (nbNoteList.size()==0){
+                    String defautNbNote = getResources().getString(R.string.item_default_nbNote);
+                    nbNoteList.add(defautNbNote);
+                }
+                if (noteValueList.size()==0){
+                    String defautNoteValue = getResources().getString(R.string.item_default_note_value);
+                    noteValueList.add(defautNoteValue);
+                }
+                if (hrefList.size()==0){
+                    hrefList.add("");
+                }
+
+
 
 
 
                 for (int i = 0; i < titleList.size();i++) {
-                    //Log.e("", titleList.get(i));
-
-
 
                     List<String> pseudoListe = new ArrayList<String>();
                     List<String> noteValueGivenList = new ArrayList<String>();
@@ -203,22 +215,33 @@ public class MainActivity extends AppCompatActivity {
                     }
                     dateList.removeAll(Arrays.asList("", null));
 
-
-                    int nbRand = (int) Math.floor(Math.random() * (commentList.size()));
-                    //Log.e("", titleList.get(i));
+                    int nbRand ;
+                    if(pseudoListe.size()!=0){
+                        nbRand = (int) Math.floor(Math.random() * (pseudoListe.size()));
+                    }else {
+                        nbRand =0;
+                    }
 
                     if (pseudoListe.size()==0){
-                        pseudoListe.add("rien récupéré");
+                        String defautPseudo = getResources().getString(R.string.item_default_pseudo);
+                        pseudoListe.add(defautPseudo);
                     }
 
                     if (noteValueGivenList.size()==0){
-                        noteValueGivenList.add("rien récupéré");
+                        String defautnoteValueGiven = getResources().getString(R.string.item_default_note_given);
+                        noteValueGivenList.add(defautnoteValueGiven);
                     }
 
                     if (commentList.size()==0) {
-                        commentList.add("rien récupéré");
+                        String defautComment = getResources().getString(R.string.item_default_comment);
+                        commentList.add(defautComment);
                     }
-                    allInfoCommentList.add("Pseudo : " + pseudoListe.get(nbRand) + " Note donné : " + noteValueGivenList.get(nbRand) + " commentaire donné : " + commentList.get(nbRand));
+
+                    if (dateList.size()==0) {
+                        String defautDatePost = getResources().getString(R.string.item_default_date);
+                        dateList.add(defautDatePost);
+                    }
+                    allInfoCommentList.add("Pseudo : " + pseudoListe.get(nbRand) + " Note donné : " + noteValueGivenList.get(nbRand) + " commentaire donné : " + commentList.get(nbRand) + " date donné : " +dateList.get(nbRand));
                     //mettre dans une string puis ajouter dans une liste et l'envoyer
                 }
 
@@ -268,7 +291,6 @@ public class MainActivity extends AppCompatActivity {
                     readTextFromRequest = requestText;
                     Toast.makeText(MainActivity.this, requestText, Toast.LENGTH_SHORT).show();
                 }
-
 
             } catch (Exception e) {
                 e.printStackTrace();
