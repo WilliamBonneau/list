@@ -7,3 +7,4 @@ cette application permet de :
           - Le commentaire aléatoire d'une personne (pseudo, note, commentaire et date de publication)
     - naviguer sur pluseurs pages de recette
     - Ouvrir une recette selectionné 
+    - Afficher et rechercher au click la dernière recette
