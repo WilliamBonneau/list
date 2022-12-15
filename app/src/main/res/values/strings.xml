@@ -7,4 +7,5 @@
     <string name="item_default_note_given">Note donnée manquante</string>
     <string name="item_default_comment">Commentaire manquant</string>
     <string name="item_default_date">Date manquante</string>
+    <string name="item_default_img">Image manquante</string>
 </resources>

@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
-
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+
+
+
+
 
 public class listItemsAdapter extends BaseAdapter {
 
@@ -71,11 +71,7 @@ public class listItemsAdapter extends BaseAdapter {
         TextView itemComment = view.findViewById(R.id.item_comment);
         TextView itemDatePost = view.findViewById(R.id.item_date_post);
 
-        String pseudo;
-        String noteGiven;
-        String comment;
-        String datePost;
-
+        String pseudo,noteGiven, comment, datePost;
 
         String regexDefaut = ".*: ";
         String regexComment = "commentaire donné : .*";
@@ -127,13 +123,12 @@ public class listItemsAdapter extends BaseAdapter {
         itemNbNoteView.setText(itemNbNote);
         itemNoteValueListView.setText(itemNoteValue);
         
-        if (!imgLink.isEmpty()){
+        if (!imgLink.equals(context.getResources().getString(R.string.item_default_img))){
             Picasso.get().load(imgLink).into(itemImgView);
         }
         else {
-            String ressourceName = "item_"+imgLink+"_icon";
-            int resId = context.getResources().getIdentifier(ressourceName,"drawable",context.getPackageName());
-            itemImgView.setImageResource(resId);
+            int defImg = context.getResources().getIdentifier("@tools:sample/avatars","drawable",context.getPackageName());
+            itemImgView.setImageResource(defImg);
         }
 
         view.setOnClickListener(new View.OnClickListener() {

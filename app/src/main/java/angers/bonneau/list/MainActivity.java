@@ -1,5 +1,7 @@
 package angers.bonneau.list;
 
+import static java.lang.Integer.parseInt;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnNext,btnActuel,btnPrevious;
     int pageNb=1;
     String inputText;
+
+    List<String> titleList = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pageNb=1;
+                Log.e("ee", String.valueOf(pageNb));
                 searchRequest();
             }
         });
@@ -96,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
     public class description_webscrappe extends AsyncTask<Void, Void, String> {
 
         public description_webscrappe(String text) {
+
         }
 
         @Override
@@ -110,11 +117,11 @@ public class MainActivity extends AppCompatActivity {
             org.jsoup.nodes.Document document = null;
             try {
                 loadRequest();
-                document = Jsoup.connect("https://www.marmiton.org/recettes/recherche.aspx?aqt="+readTextFromRequest.replaceAll(" ","-")+"&page=" + pageNb ).get();
+                document = Jsoup.connect("https://www.marmiton.org/recettes/recherche.aspx?aqt="+readTextFromRequest.trim().replaceAll(" ","-")+"&page=" + pageNb).get();
                 Elements allInfo = document.getElementsByClass("MRTN__sc-1gofnyi-0 YLcEb");
 
 
-                List<String> titleList = new ArrayList<String>();
+                titleList.clear();
                 List<String> noteValueList = new ArrayList<String>();
                 List<String> nbNoteList = new ArrayList<String>();
                 List<String> hrefList = new ArrayList<String>();
@@ -186,35 +193,37 @@ public class MainActivity extends AppCompatActivity {
                     List<String> noteValueGivenList = new ArrayList<String>();
                     List<String> commentList = new ArrayList<String>();
                     List<String> dateList = new ArrayList<String>();
+                    //ici il faut faire attention a si le resultat est null
+                    if (!hrefList.get(i).isEmpty()) {
 
 
-                    document = Jsoup.connect(hrefList.get(i)).get();
-                    Elements allInfoArticle = document.getElementsByClass("RCP__sc-2jkou4-2 eEVBBK");
+                        document = Jsoup.connect(hrefList.get(i)).get();
+                        Elements allInfoArticle = document.getElementsByClass("RCP__sc-2jkou4-2 eEVBBK");
 
-                    Matcher mtchPseudo = all.matcher(allInfoArticle.select(".MuiTypography-root.MuiTypography-h6").toString());
-                    while (mtchPseudo.find()) {
-                        pseudoListe.add(mtchPseudo.group().replaceAll(regexHTMChevron, "").trim());
+                        Matcher mtchPseudo = all.matcher(allInfoArticle.select(".MuiTypography-root.MuiTypography-h6").toString());
+                        while (mtchPseudo.find()) {
+                            pseudoListe.add(mtchPseudo.group().replaceAll(regexHTMChevron, "").trim());
+                        }
+                        pseudoListe.removeAll(Arrays.asList("", null));
+
+                        Matcher mtchNoteValueGivenList = all.matcher(allInfoArticle.select(".SHRD__sc-10plygc-0.jHwZwD").toString());
+                        while (mtchNoteValueGivenList.find()) {
+                            noteValueGivenList.add(mtchNoteValueGivenList.group().replaceAll(regexHTMChevron, "").trim());
+                        }
+                        noteValueGivenList.removeAll(Arrays.asList("", null));
+
+                        Matcher mtchCommentList = all.matcher(allInfoArticle.select(".SHRD__sc-10plygc-0.bzAHrL").toString());
+                        while (mtchCommentList.find()) {
+                            commentList.add(mtchCommentList.group().replaceAll(regexHTMChevron, "").trim());
+                        }
+                        commentList.removeAll(Arrays.asList("", null));
+
+                        Matcher mtchDateList = all.matcher(allInfoArticle.select(".MuiTypography-root.MuiTypography-body2").toString());
+                        while (mtchDateList.find()) {
+                            dateList.add(mtchDateList.group().replaceAll(regexHTMChevron, "").trim());
+                        }
+                        dateList.removeAll(Arrays.asList("", null));
                     }
-                    pseudoListe.removeAll(Arrays.asList("", null));
-
-                    Matcher mtchNoteValueGivenList = all.matcher(allInfoArticle.select(".SHRD__sc-10plygc-0.jHwZwD").toString());
-                    while (mtchNoteValueGivenList.find()) {
-                        noteValueGivenList.add(mtchNoteValueGivenList.group().replaceAll(regexHTMChevron, "").trim());
-                    }
-                    noteValueGivenList.removeAll(Arrays.asList("", null));
-
-                    Matcher mtchCommentList = all.matcher(allInfoArticle.select(".SHRD__sc-10plygc-0.bzAHrL").toString());
-                    while (mtchCommentList.find()) {
-                        commentList.add(mtchCommentList.group().replaceAll(regexHTMChevron, "").trim());
-                    }
-                    commentList.removeAll(Arrays.asList("", null));
-
-                    Matcher mtchDateList = all.matcher(allInfoArticle.select(".MuiTypography-root.MuiTypography-body2").toString());
-                    while (mtchDateList.find()) {
-                        dateList.add(mtchDateList.group().replaceAll(regexHTMChevron, "").trim());
-                    }
-                    dateList.removeAll(Arrays.asList("", null));
-
                     int nbRand ;
                     if(pseudoListe.size()!=0){
                         nbRand = (int) Math.floor(Math.random() * (pseudoListe.size()));
@@ -233,13 +242,18 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (commentList.size()==0) {
-                        String defautComment = getResources().getString(R.string.item_default_comment);
+                        String defautComment = getResources().getString(R.string.item_default_img);
                         commentList.add(defautComment);
                     }
 
                     if (dateList.size()==0) {
                         String defautDatePost = getResources().getString(R.string.item_default_date);
                         dateList.add(defautDatePost);
+                    }
+
+                    if (imgList.size()==0) {
+                        String defautImg = getResources().getString(R.string.item_default_img);
+                        imgList.add(defautImg);
                     }
                     allInfoCommentList.add("Pseudo : " + pseudoListe.get(nbRand) + " Note donné : " + noteValueGivenList.get(nbRand) + " commentaire donné : " + commentList.get(nbRand) + " date donné : " +dateList.get(nbRand));
                     //mettre dans une string puis ajouter dans une liste et l'envoyer
@@ -279,7 +293,6 @@ public class MainActivity extends AppCompatActivity {
 
                 String s = new String(content);
 
-                s = s.substring(1, s.length() - 1);
                 String requestText = s.trim();
 
                 // There may be no items in the grocery list.
@@ -303,15 +316,18 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String unused) {
 
             btnActuel.setVisibility(View.VISIBLE);
-            if (!btnActuel.getText().toString().equals("1")){
+            if (!(parseInt((String) btnActuel.getText()) <=1)){
                 btnPrevious.setVisibility(View.VISIBLE);
             }else {
                 btnPrevious.setVisibility(View.GONE);
-                btnNext.setText(String.valueOf(pageNb+1) + " →");
-                btnNext.setVisibility(View.VISIBLE);
+                if (titleList.size() >= 12){
+                    btnNext.setText(String.valueOf(pageNb+1) + " →");
+                    btnNext.setVisibility(View.VISIBLE);
+                }
+                else{
+                    btnNext.setVisibility(View.GONE);
+                }
             }
-
-
 
             btnPrevious.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -322,7 +338,12 @@ public class MainActivity extends AppCompatActivity {
 
                     btnPrevious.setText("← "+ String.valueOf(pageNb-1));
                     btnActuel.setText(String.valueOf(pageNb));
-                    btnNext.setText(String.valueOf(pageNb+1) + " →");
+                    if (titleList.size() >= 12){
+                        btnNext.setText(String.valueOf(pageNb+1) + " →");
+                        btnNext.setVisibility(View.VISIBLE);
+                    }else{
+                        btnNext.setVisibility(View.GONE);
+                    }
 
                     description_webscrappe dw = new description_webscrappe(inputText);
                     dw.execute();
@@ -338,11 +359,18 @@ public class MainActivity extends AppCompatActivity {
 
                     btnPrevious.setText("← "+ String.valueOf(pageNb-1));
                     btnActuel.setText(String.valueOf(pageNb));
-                    btnNext.setText(String.valueOf(pageNb+1) + " →");
+                    if (titleList.size() >= 12){
+                        btnNext.setText(String.valueOf(pageNb+1) + " →");
+                        btnNext.setVisibility(View.VISIBLE);
+                    }else{
+                        btnNext.setVisibility(View.GONE);
+                    }
                     description_webscrappe dw = new description_webscrappe(inputText);
                     dw.execute();
                 }
             });
+
+
         }
 
     }

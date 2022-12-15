@@ -20,15 +20,15 @@
             android:ems="10"
             android:hint="entrer votre recherche"
             android:minHeight="48dp" />
+
         <ImageView
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:layout_toRightOf="@+id/input"
             android:id="@+id/img_search"
-            android:layout_marginLeft="7sp"
-            android:src="@drawable/btn_search"
-            android:layout_centerVertical="true"
-            />
+            android:layout_width="59dp"
+            android:layout_height="59dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="17dp"
+            android:layout_toRightOf="@+id/input"
+            android:src="@drawable/btn_search" />
 
     </RelativeLayout>
 
