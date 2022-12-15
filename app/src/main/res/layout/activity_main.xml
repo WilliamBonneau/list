@@ -16,9 +16,22 @@
             android:id="@+id/input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
             android:ems="10"
-            android:hint="entrer votre recherche"
+            android:hint="entrer votre recherche : "
+            android:minHeight="48dp" />
+
+        <TextView
+            android:id="@+id/last_research"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="3dp"
+            android:layout_below="@+id/input"
+            android:layout_centerInParent="true"
+            android:textStyle="italic"
+            android:ems="10"
+            android:hint="dernière recherche : "
             android:minHeight="48dp" />
 
         <ImageView

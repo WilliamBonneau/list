@@ -39,6 +39,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     private TextView input;
+    private TextView lastResearch;
     private ImageView imgSearch;
     String readTextFromRequest;
     private Button btnNext,btnActuel,btnPrevious;
@@ -57,12 +58,24 @@ public class MainActivity extends AppCompatActivity {
         btnActuel = findViewById(R.id.button_actuel);
         btnNext = findViewById(R.id.button_next);
         btnActuel.setText("1");
+        lastResearch = findViewById(R.id.last_research);
+
+        loadRequest();
+
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pageNb=1;
-                Log.e("ee", String.valueOf(pageNb));
                 searchRequest();
+            }
+        });
+
+        lastResearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Recherche pour : " + readTextFromRequest + " sur le site Marmiton", Toast.LENGTH_SHORT).show();
+                description_webscrappe dw = new description_webscrappe(readTextFromRequest);
+                dw.execute();
             }
         });
 
@@ -97,6 +110,34 @@ public class MainActivity extends AppCompatActivity {
             dw.execute();
         }
 
+    }
+
+    private void loadRequest() {
+        File path = getApplicationContext().getFilesDir();
+        File readFrom = new File(path, "list.txt");
+        byte[] content = new byte[(int) readFrom.length()];
+
+        FileInputStream stream = null;
+        try {
+            stream = new FileInputStream(readFrom);
+            stream.read(content);
+
+            String s = new String(content);
+
+            String requestText = s.trim();
+
+            // There may be no items in the grocery list.
+            if (requestText.isEmpty()){
+                readTextFromRequest = "";
+            }
+            else {
+                readTextFromRequest = requestText;
+                lastResearch.setText("Dernière recherche : "+readTextFromRequest);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public class description_webscrappe extends AsyncTask<Void, Void, String> {
@@ -182,10 +223,6 @@ public class MainActivity extends AppCompatActivity {
                 if (hrefList.size()==0){
                     hrefList.add("");
                 }
-
-
-
-
 
                 for (int i = 0; i < titleList.size();i++) {
 
@@ -282,34 +319,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
-        private void loadRequest() {
-            File path = getApplicationContext().getFilesDir();
-            File readFrom = new File(path, "list.txt");
-            byte[] content = new byte[(int) readFrom.length()];
 
-            FileInputStream stream = null;
-            try {
-                stream = new FileInputStream(readFrom);
-                stream.read(content);
-
-                String s = new String(content);
-
-                String requestText = s.trim();
-
-                // There may be no items in the grocery list.
-                if (requestText.isEmpty()){
-                    readTextFromRequest = "";
-                    Toast.makeText(MainActivity.this, "Une erreur s'est produite.", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    readTextFromRequest = requestText;
-                    Toast.makeText(MainActivity.this, requestText, Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
 
 
@@ -335,11 +345,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-
-
-
-
-
             btnPrevious.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -363,8 +368,6 @@ public class MainActivity extends AppCompatActivity {
                     }else {
                         btnNext.setVisibility(View.GONE);
                     }
-
-
 
                     description_webscrappe dw = new description_webscrappe(inputText);
                     dw.execute();
@@ -393,17 +396,18 @@ public class MainActivity extends AppCompatActivity {
                     }else {
                         btnNext.setVisibility(View.GONE);
                     }
-
                     description_webscrappe dw = new description_webscrappe(inputText);
                     dw.execute();
                 }
             });
-
-
         }
-
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-
+        Log.e("derniere recherceh ", inputText);
+        saveRequestAsFile(inputText);
+    }
 }
