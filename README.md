@@ -8,3 +8,5 @@ cette application permet de :
     - naviguer sur pluseurs pages de recette
     - Ouvrir une recette selectionné 
     - Afficher et rechercher au click la dernière recette
+    
+(mode nuit actuellement non pris en charge)
