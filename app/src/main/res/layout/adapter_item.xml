@@ -37,58 +37,79 @@
 
             <TextView
                 android:id="@+id/item_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:textStyle="bold"
+                android:autoSizeMaxTextSize="18dp"
+                android:autoSizeMinTextSize="10dp"
+                android:autoSizeStepGranularity="0.25dp"
+                android:autoSizeTextType="uniform"
                 android:text="@string/item_default_recette"
-                android:textColor="@color/purple_500"
-                android:textSize="13dp" />
+                android:textColor="@color/purple_500" />
 
             <TextView
                 android:id="@+id/item_note_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="49dp"
+                android:layout_height="15dp"
                 android:layout_below="@id/item_title"
-                android:text="@string/item_default_note_value"
-                android:textSize="11dp" />
+                android:autoSizeMaxTextSize="10dp"
+                android:autoSizeMinTextSize="6dp"
+                android:autoSizeStepGranularity="0.25dp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/item_default_note_value" />
 
             <TextView
                 android:id="@+id/item_nb_note"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="15dp"
                 android:layout_below="@+id/item_title"
-                android:layout_marginStart="125dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="0dp"
-                android:text="@string/item_default_nbNote"
-                android:textSize="11dp" />
+                android:layout_toEndOf="@+id/item_note_value"
+                android:autoSizeMaxTextSize="10dp"
+                android:autoSizeMinTextSize="5dp"
+                android:autoSizeStepGranularity="0.25dp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/item_default_nbNote" />
 
             <TextView
                 android:id="@+id/item_pseudo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="84dp"
+                android:layout_height="15dp"
                 android:layout_below="@+id/item_note_value"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="3dp"
+                android:autoSizeMaxTextSize="15dp"
+                android:autoSizeMinTextSize="6dp"
+                android:autoSizeStepGranularity="0.25dp"
+                android:autoSizeTextType="uniform"
                 android:text="@string/item_default_pseudo"
-                android:textSize="11dp" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/item_note_given"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/item_pseudo"
-                android:text="@string/item_default_note_given"
-                android:textSize="11dp" />
+                android:layout_width="73dp"
+                android:layout_height="15dp"
+                android:layout_below="@+id/item_note_value"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="3dp"
+                android:layout_toEndOf="@+id/item_pseudo"
+                android:autoSizeMaxTextSize="15dp"
+                android:autoSizeMinTextSize="6dp"
+                android:autoSizeStepGranularity="0.25dp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/item_default_note_given" />
 
             <TextView
                 android:id="@+id/item_comment"
                 android:layout_width="match_parent"
-                android:layout_height="33dp"
+                android:layout_height="47dp"
                 android:layout_below="@id/item_note_given"
-                android:text="@string/item_default_comment"
-                android:autoSizeMinTextSize="8dp"
-                android:autoSizeMaxTextSize="15dp"
+                android:layout_marginTop="4dp"
+                android:autoSizeMaxTextSize="14dp"
+                android:autoSizeMinTextSize="9dp"
                 android:autoSizeStepGranularity="0.25dp"
                 android:autoSizeTextType="uniform"
-                />
+                android:text="@string/item_default_comment" />
 
             <TextView
                 android:id="@+id/item_date_post"
@@ -102,7 +123,7 @@
                 android:layout_marginBottom="2dp"
                android:textAlignment="textEnd"
                 android:text="@string/item_default_date"
-                android:textSize="11dp" />
+                android:textSize="9dp" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
