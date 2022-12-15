@@ -256,7 +256,8 @@ public class MainActivity extends AppCompatActivity {
                         imgList.add(defautImg);
                     }
                     allInfoCommentList.add("Pseudo : " + pseudoListe.get(nbRand) + " Note donné : " + noteValueGivenList.get(nbRand) + " commentaire donné : " + commentList.get(nbRand) + " date donné : " +dateList.get(nbRand));
-                    //mettre dans une string puis ajouter dans une liste et l'envoyer
+
+                                        //mettre dans une string puis ajouter dans une liste et l'envoyer
                 }
 
                 runOnUiThread(new Runnable() {
@@ -315,35 +316,55 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String unused) {
 
-            btnActuel.setVisibility(View.VISIBLE);
-            if (!(parseInt((String) btnActuel.getText()) <=1)){
+            if (pageNb>1){
+                btnPrevious.setText("← "+ String.valueOf(pageNb-1));
                 btnPrevious.setVisibility(View.VISIBLE);
             }else {
                 btnPrevious.setVisibility(View.GONE);
-                if (titleList.size() >= 12){
-                    btnNext.setText(String.valueOf(pageNb+1) + " →");
-                    btnNext.setVisibility(View.VISIBLE);
-                }
-                else{
-                    btnNext.setVisibility(View.GONE);
-                }
             }
+
+
+            btnActuel.setText(String.valueOf(pageNb));
+            btnActuel.setVisibility(View.VISIBLE);
+
+            if (titleList.size()>=12){
+                btnNext.setText(String.valueOf(pageNb + 1) + " →");
+                btnNext.setVisibility(View.VISIBLE);
+            }else {
+                btnNext.setVisibility(View.GONE);
+            }
+
+
+
+
+
+
 
             btnPrevious.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //to do recup nb de la page +1
                     pageNb-=1;
-                    inputText = input.getText().toString();
 
-                    btnPrevious.setText("← "+ String.valueOf(pageNb-1));
+
+                    if (pageNb>1){
+                        btnPrevious.setText("← "+ String.valueOf(pageNb-1));
+                        btnPrevious.setVisibility(View.VISIBLE);
+                    }else {
+                        btnPrevious.setVisibility(View.GONE);
+                    }
+
                     btnActuel.setText(String.valueOf(pageNb));
-                    if (titleList.size() >= 12){
-                        btnNext.setText(String.valueOf(pageNb+1) + " →");
+                    btnActuel.setVisibility(View.VISIBLE);
+
+                    if (titleList.size()>=12){
+                        btnNext.setText(String.valueOf(pageNb + 1) + " →");
                         btnNext.setVisibility(View.VISIBLE);
-                    }else{
+                    }else {
                         btnNext.setVisibility(View.GONE);
                     }
+
+
 
                     description_webscrappe dw = new description_webscrappe(inputText);
                     dw.execute();
@@ -355,16 +376,24 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     //to do recup nb de la page +1
                     pageNb+=1;
-                    inputText = input.getText().toString();
 
-                    btnPrevious.setText("← "+ String.valueOf(pageNb-1));
+                    if (pageNb>1){
+                        btnPrevious.setText("← "+ String.valueOf(pageNb-1));
+                        btnPrevious.setVisibility(View.VISIBLE);
+                    }else {
+                        btnPrevious.setVisibility(View.GONE);
+                    }
+
                     btnActuel.setText(String.valueOf(pageNb));
-                    if (titleList.size() >= 12){
-                        btnNext.setText(String.valueOf(pageNb+1) + " →");
+                    btnActuel.setVisibility(View.VISIBLE);
+
+                    if (titleList.size()>=12){
+                        btnNext.setText(String.valueOf(pageNb + 1) + " →");
                         btnNext.setVisibility(View.VISIBLE);
-                    }else{
+                    }else {
                         btnNext.setVisibility(View.GONE);
                     }
+
                     description_webscrappe dw = new description_webscrappe(inputText);
                     dw.execute();
                 }
