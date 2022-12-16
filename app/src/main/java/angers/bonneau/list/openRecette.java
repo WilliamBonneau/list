@@ -16,14 +16,15 @@ import okio.Utf8;
 
 public class openRecette extends AppCompatActivity {
     WebView wbView;
-    ImageView btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_recette);
         wbView = (WebView) findViewById(R.id.webView);
 
+        //webview de la recette on charge la page en question directement dans l'application
 
+        //string erreur 404
         String defaut = "<html dir=\"ltr\" lang=\"fr\" class=\"\" lazy-loaded=\"true\"><head>\n" +
                 "\t<head>\n" +
                 "\t</head>\n" +
@@ -36,6 +37,7 @@ public class openRecette extends AppCompatActivity {
                 "\t\t</div>\n" +
                 "\t</body>\n" +
                 "</html>";
+
 
         wbView.setWebViewClient(new WebViewClient());
 

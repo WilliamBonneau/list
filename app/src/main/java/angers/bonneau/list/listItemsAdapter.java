@@ -3,7 +3,6 @@ package angers.bonneau.list;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +22,12 @@ import java.util.regex.Pattern;
 public class listItemsAdapter extends BaseAdapter {
 
     private Context context;
-    private List<TechItem> listItemslist;
+    private List<Recette> listItemslist;
     private LayoutInflater inflater;
     public Activity mContext;
+    //creer pour chaque item un élément avec les données des recettes
 
-    public listItemsAdapter(Context context, List<TechItem> listItemslist){
+    public listItemsAdapter(Context context, List<Recette> listItemslist){
 
         this.context = context;
         this.listItemslist = listItemslist;
@@ -40,7 +40,7 @@ public class listItemsAdapter extends BaseAdapter {
     }
 
     @Override
-    public TechItem getItem(int position) {
+    public Recette getItem(int position) {
         return listItemslist.get(position);
     }
 
@@ -53,7 +53,7 @@ public class listItemsAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.adapter_item, null);
         //récupere les info de l'item actuel
-        TechItem currentItem = getItem(position);
+        Recette currentItem = getItem(position);
         String itemTitle = currentItem.getTitle();
         String imgLink = currentItem.getImgLink();
         String itemNbNote = currentItem.getNbNote();
@@ -71,8 +71,9 @@ public class listItemsAdapter extends BaseAdapter {
         TextView itemComment = view.findViewById(R.id.item_comment);
         TextView itemDatePost = view.findViewById(R.id.item_date_post);
 
+        //permet par la suite de replace chaque élément de la string non escentiel car j'ai renvoyé une string avec tout les donnés
+        //plutot que plsuieurs éléments
         String pseudo,noteGiven, comment, datePost;
-
         String regexDefaut = ".*: ";
         String regexComment = "commentaire donné : .*";
         String regexNoteGiven = "Note donné : .*";
@@ -85,7 +86,7 @@ public class listItemsAdapter extends BaseAdapter {
         Pattern ptrnDatePost = Pattern.compile("date donné : .*");
         Pattern ptrnPseudo = Pattern.compile(".*");
 
-
+        //pour chaque éléments on regarde si on récupère bien ce qui était attendu et set l'eleemnt correspondant avec les données qui correspondent
         Matcher mtchDatePost = ptrnDatePost.matcher(itemAllCommentInfos);
         if (mtchDatePost.find())
         {
@@ -118,15 +119,16 @@ public class listItemsAdapter extends BaseAdapter {
         }
 
 
-
         itemTitleView.setText(itemTitle);
         itemNbNoteView.setText(itemNbNote);
         itemNoteValueListView.setText(itemNoteValue);
         
         if (!imgLink.equals(context.getResources().getString(R.string.item_default_img))){
+            //permet de set une image
             Picasso.get().load(imgLink).into(itemImgView);
         }
         else {
+            //image par défaut
             int defImg = context.getResources().getIdentifier("@tools:sample/avatars","drawable",context.getPackageName());
             itemImgView.setImageResource(defImg);
         }
@@ -134,6 +136,7 @@ public class listItemsAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //au click on ouvre la recette qui correspond
                 mContext = (Activity) context;
 
                 Intent intent = new Intent(view.getContext(), openRecette.class);

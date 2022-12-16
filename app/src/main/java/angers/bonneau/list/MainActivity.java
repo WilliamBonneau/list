@@ -2,16 +2,12 @@ package angers.bonneau.list;
 
 import static java.lang.Integer.parseInt;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +18,6 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -33,7 +28,6 @@ import java.util.List;
 import org.jsoup.Jsoup;
 
 import org.jsoup.select.Elements;
-import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -59,12 +53,13 @@ public class MainActivity extends AppCompatActivity {
         btnNext = findViewById(R.id.button_next);
         btnActuel.setText("1");
         lastResearch = findViewById(R.id.last_research);
-
+        //chargement de la derniere requete afin de pouvoir afficher "derniere recherche : "
         loadRequest();
 
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //déclanche une recherche
                 pageNb=1;
                 searchRequest();
             }
@@ -73,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         lastResearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //si on click sur "derniere recherche : item " on déclanche la recherche
                 Toast.makeText(MainActivity.this, "Recherche pour : " + readTextFromRequest + " sur le site Marmiton", Toast.LENGTH_SHORT).show();
                 description_webscrappe dw = new description_webscrappe(readTextFromRequest);
                 dw.execute();
@@ -82,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveRequestAsFile(String inputText){
+        //sauvegarde la derniere recherche
         File path = getApplicationContext().getFilesDir();
         try {
             FileOutputStream writer = new FileOutputStream(new File(path, "list.txt"));
@@ -113,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadRequest() {
+        //récupère les infos de la dernière recherche
         File path = getApplicationContext().getFilesDir();
         File readFrom = new File(path, "list.txt");
         byte[] content = new byte[(int) readFrom.length()];
@@ -157,10 +155,12 @@ public class MainActivity extends AppCompatActivity {
 
             org.jsoup.nodes.Document document = null;
             try {
+                //on récupère les infos de la dernière recherche et on fait une requete sur le site marmiton avec un numéro de page
                 loadRequest();
                 document = Jsoup.connect("https://www.marmiton.org/recettes/recherche.aspx?aqt="+readTextFromRequest.trim().replaceAll(" ","-")+"&page=" + pageNb).get();
                 Elements allInfo = document.getElementsByClass("MRTN__sc-1gofnyi-0 YLcEb");
 
+                //clear de la titleList
 
                 titleList.clear();
                 List<String> noteValueList = new ArrayList<String>();
@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 List<String> imgList = new ArrayList<String>();
                 List<String> allInfoCommentList = new ArrayList<String>();
 
+                //les regex afin de clean ce qui est reçu
                 Pattern all = Pattern.compile("(.*)");
                 Pattern regexHtmlImgSrc = Pattern.compile("((img|data).src=\"(https?:\\/\\/[^\\s]+).(?:png|jpg|jpeg|gif|png|svg|webp))");
                 String regexHTMChevron = "<[^>]*>";
@@ -177,7 +178,8 @@ public class MainActivity extends AppCompatActivity {
                 String fixSrc = ".*=\"";
                 String marmitonAdress = "https://www.marmiton.org";
 
-
+                //Si la regex detecte qu'il y a bien un élément qui match alors on l'ajoute dans une liste
+                //on clean aussi toute les chose de trop reçu
                 Matcher mtchtitle = all.matcher(allInfo.select(".MRTN__sc-30rwkm-0.dJvfhM").toString());
                 while(mtchtitle.find()){
                     titleList.add(mtchtitle.group().replaceAll(regexHTMChevron,"").trim());
@@ -208,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 hrefList.removeAll(Arrays.asList("", null));
 
+                //si on ne récupère rien alors on set l'élément avec son titre par défaut
                 if (titleList.size()==0){
                     String defautTitle = getResources().getString(R.string.item_default_recette);
                     titleList.add(defautTitle);
@@ -225,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 for (int i = 0; i < titleList.size();i++) {
-
+                    //recherche pour le commentaire, et de manière aléatoire
                     List<String> pseudoListe = new ArrayList<String>();
                     List<String> noteValueGivenList = new ArrayList<String>();
                     List<String> commentList = new ArrayList<String>();
@@ -261,6 +264,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                         dateList.removeAll(Arrays.asList("", null));
                     }
+                    //si + un pseudo existe alors on génère un numéro aléartoire pour afficher un commentaire
+                    //sinon on set les titre par défaut présent dans un fichier de String defaut
                     int nbRand ;
                     if(pseudoListe.size()!=0){
                         nbRand = (int) Math.floor(Math.random() * (pseudoListe.size()));
@@ -279,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (commentList.size()==0) {
-                        String defautComment = getResources().getString(R.string.item_default_img);
+                        String defautComment = getResources().getString(R.string.item_default_comment);
                         commentList.add(defautComment);
                     }
 
@@ -292,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
                         String defautImg = getResources().getString(R.string.item_default_img);
                         imgList.add(defautImg);
                     }
+                    //on mets tout dans une seule chaine de carractères car celà est plus court
                     allInfoCommentList.add("Pseudo : " + pseudoListe.get(nbRand) + " Note donné : " + noteValueGivenList.get(nbRand) + " commentaire donné : " + commentList.get(nbRand) + " date donné : " +dateList.get(nbRand));
 
                                         //mettre dans une string puis ajouter dans une liste et l'envoyer
@@ -300,14 +306,15 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        List<TechItem> TechItemList = new ArrayList<>();
+                        List<Recette> recetteList = new ArrayList<>();
+                        //pour le  nombre de titre recu on creer un nouvel objet recette avec tout les élément présent
                         for (int i = 0; i < titleList.size();i++)
                         {
-                            TechItemList.add(new TechItem(titleList.get(i),nbNoteList.get(i),imgList.get(i),noteValueList.get(i), hrefList.get(i),allInfoCommentList.get(i)));
+                            recetteList.add(new Recette(titleList.get(i),nbNoteList.get(i),imgList.get(i),noteValueList.get(i), hrefList.get(i),allInfoCommentList.get(i)));
                         }
-
+                        //puis on affecte à la liste d'item les éléments
                         ListView listItemsView = findViewById(R.id.list_items);
-                        listItemsView.setAdapter(new listItemsAdapter(MainActivity.this, TechItemList));
+                        listItemsView.setAdapter(new listItemsAdapter(MainActivity.this, recetteList));
                     }
                 });
 
@@ -325,7 +332,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String unused) {
-
+            //après l'execution on affiche ou numéro des bouton en fonction de la page ou l'on se trouve
+            //dans la liste le nombre maximum renvoyé par le site étant de 12 alors on regarde cette size
             if (pageNb>1){
                 btnPrevious.setText("← "+ String.valueOf(pageNb-1));
                 btnPrevious.setVisibility(View.VISIBLE);

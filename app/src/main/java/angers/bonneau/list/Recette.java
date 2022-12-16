@@ -1,6 +1,6 @@
 package angers.bonneau.list;
 
-public class TechItem {
+public class Recette {
     //attributs
     private String title;
     private String nbNote;
@@ -9,8 +9,8 @@ public class TechItem {
     private String hrefLink;
     private String allCommentInfos;
 
-    //constructeur pour creer un objet TechItem
-    public TechItem(String title, String nbNote, String imgLink, String noteValue, String hrefLink, String allCommentInfos){
+    //constructeur pour creer un objet Recette
+    public Recette(String title, String nbNote, String imgLink, String noteValue, String hrefLink, String allCommentInfos){
         this.title = title;
         this.nbNote = nbNote;
         this.imgLink = imgLink;

@@ -87,14 +87,14 @@
 
             <TextView
                 android:id="@+id/item_note_given"
-                android:layout_width="73dp"
+                android:layout_width="78dp"
                 android:layout_height="15dp"
                 android:layout_below="@+id/item_note_value"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="3dp"
                 android:layout_toEndOf="@+id/item_pseudo"
                 android:autoSizeMaxTextSize="15dp"
-                android:autoSizeMinTextSize="6dp"
+                android:autoSizeMinTextSize="7dp"
                 android:autoSizeStepGranularity="0.25dp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/item_default_note_given" />
