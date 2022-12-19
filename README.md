@@ -13,6 +13,8 @@ cette application permet de :
 
 lien d'une vidéo démo de l'application et ses fonctionalité : https://youtu.be/1PoZVg6IGPM
 
+APK : disponible dans le git 
+
 note obtenu par codeRefractor : A
 ToDo : 
     aléger la méthode 
