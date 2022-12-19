@@ -12,3 +12,8 @@ cette application permet de :
 (mode nuit actuellement non pris en charge)
 
 lien d'une vidéo démo de l'application et ses fonctionalité : https://youtu.be/1PoZVg6IGPM
+
+note obtenu par codeRefractor : A
+ToDo : 
+    aléger la méthode 
+        protected String doInBackground(Void... voids) {
