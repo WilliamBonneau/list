@@ -100,6 +100,10 @@ public class listItemsAdapter extends BaseAdapter {
         {
             comment = mtchComment.group().replaceAll(regexDefaut,"").trim();
             itemAllCommentInfos = itemAllCommentInfos.replaceAll(regexComment,"").trim();
+            //enlève la fin de la string si trop grande pour rester sur une visibilité du texte correcte
+            if (comment.length()>130){
+                comment = comment.substring(0, 127)+"...";
+            }
             itemComment.setText(comment);
         }
 

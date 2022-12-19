@@ -106,7 +106,7 @@
                 android:layout_below="@id/item_note_given"
                 android:layout_marginTop="4dp"
                 android:autoSizeMaxTextSize="14dp"
-                android:autoSizeMinTextSize="9dp"
+                android:autoSizeMinTextSize="10dp"
                 android:autoSizeStepGranularity="0.25dp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/item_default_comment" />
